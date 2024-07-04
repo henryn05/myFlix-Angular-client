@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sign Up!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form>
+        <!-- Double binding Username using ngModel directive-->
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.Username"
+            placeholder="Username"
+            type="text"
+            name="Username"
+            required
+          >
+        </mat-form-field>
+        <!-- Double binding Password using ngModel directive-->
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.Password"
+            placeholder="Password"
+            type="password"
+            name="Password"
+            required
+          >
+        </mat-form-field>
+        <!-- Double binding Email using ngModel directive-->
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.Email"
+            type = "email"
+            placeholder="Email"
+            name="Email"
+            required
+          >
+        </mat-form-field>
+        <!-- Double binding Birthday using ngModel directive-->
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.Birthday"
+            type = "date"
+            placeholder="Birthday"
+            name="Birthday"
+          >
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+  </mat-card>
