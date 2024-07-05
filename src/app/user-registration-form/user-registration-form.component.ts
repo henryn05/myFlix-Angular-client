@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
-import { UserRegistrationService } from "../fetch-api-data.service";
+import { UserService } from "../fetch-api-data.service";
 
 // Decorator tells Angular that this is a component
 @Component({
@@ -12,7 +12,7 @@ import { UserRegistrationService } from "../fetch-api-data.service";
   templateUrl: './user-registration-form.component.html',
   styleUrl: './user-registration-form.component.scss'
 })
-export class UserRegistrationFormComponent {
+export class UserRegistrationFormComponent implements OnInit {
 
   @Input() userData = {
     Username: '',
@@ -22,7 +22,7 @@ export class UserRegistrationFormComponent {
   };
 
   constructor(
-    public fetchApiData: UserRegistrationService,
+    public fetchApiData: UserService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
     public snackBar: MatSnackBar
   ) { }
