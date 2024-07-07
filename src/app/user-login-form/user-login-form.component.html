@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <mat-card>
-  <mat-card-header>
-    <mat-card-title>Sign Up!</mat-card-title>
-  </mat-card-header>
   <mat-card-content>
     <form>
       <!-- Double binding Username using ngModel directive-->
@@ -27,6 +24,13 @@
           required
         >
       </mat-form-field>
+      <button
+        mat-raised-button
+        type="submit"
+        (click)="loginUser()"
+      >
+        Login
+      </button>
     </form>
   </mat-card-content>
 </mat-card>
