@@ -49,7 +49,7 @@ export class UserService{
 
   // API call for "get all movies" endpoint
   getAllMovies() : Observable<any> {
-    const token = localStorage.getItem("token");
+    const token = (localStorage as any).getItem("token");
     return this.http
       .get(apiUrl + "/movies", {
         headers: new HttpHeaders({
