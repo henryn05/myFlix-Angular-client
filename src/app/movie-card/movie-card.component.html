@@ -18,22 +18,32 @@
                 <button
                     mat-button
                     color="primary"
+                    (click)="getGenre(genre)"
                 >
                     Genre
                 </button>
                 <button
                     mat-button
                     color="primary"
+                    (click)="getDirector(director)"
                 >
                     Director
                 </button>
                 <button
                     mat-button
                     color="primary"
+                    (click)="getDetails(details)"
                 >
-                    Synopsis
+                   Details
                 </button>
-                <mat-icon>favorite_border</mat-icon>
+                <button>
+                    <mat-icon
+                        color="primary"
+                        (click)="addToFavoriteMovies(movieId)"
+                    >
+                        favorite_border
+                    </mat-icon>
+                </button>
             </mat-card-actions>
         </mat-dialog-content>
     </mat-card>
