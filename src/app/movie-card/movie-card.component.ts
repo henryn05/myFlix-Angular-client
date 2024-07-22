@@ -24,8 +24,8 @@ export class MovieCardComponent implements OnInit {
   }
 
   getMovies(): void {
-    this.fetchApiData.getAllMovies().subscribe((result: any) => {
-      this.movies = result;
+    this.fetchApiData.getAllMovies().subscribe((res: any) => {
+      this.movies = res;
       console.log(this.movies);
       return this.movies;
     });
@@ -37,7 +37,7 @@ export class MovieCardComponent implements OnInit {
         title: movie.Director.Name,
         content: movie.Director.Bio
       },
-      width: "300px"
+      width: "400px"
     });
   }
   showGenre(movie: any): void {
@@ -46,7 +46,7 @@ export class MovieCardComponent implements OnInit {
         title: movie.Genre.Name,
         content: movie.Genre.Description
       },
-      width: "300px"
+      width: "400px"
     })
   }
 
@@ -56,14 +56,36 @@ export class MovieCardComponent implements OnInit {
         title: movie.Title,
         content: movie.Description
       },
-      width: "300px"
+      width: "400px"
     });
   }
 
-  addToFavoriteMovies(movieId: any): void {
-    this.fetchApiData.addToFavoriteMovies(movieId).subscribe((result: any) => {
-      console.log(result);
-      return result;
-    });
+  modifyFavoriteMovies(movie: any): void {
+    let user = JSON.parse(localStorage.getItem("user") || "");
+    let icon = document.getElementById(`${movie._id}-favorite-icon`);
+
+    if (user.favoriteMovies.includes(movie._id)) {
+      this.fetchApiData.deleteFromFavoriteMovies(movie._id)
+        .subscribe(res => {
+          icon?.setAttribute("fontIcon", "favorite_border");
+
+          console.log("delete success");
+          console.log(res);
+
+          user.favoriteMovies = res.favoriteMovies;
+          localStorage.setItem("user", JSON.stringify(user));
+        });
+    } else {
+      this.fetchApiData.addToFavoriteMovies(movie._id)
+        .subscribe(res => {
+          icon?.setAttribute("fontIcon", "favorite");
+
+          console.log("add success");
+          console.log(res);
+
+          user.favoriteMovies = res.favoriteMovies;
+          localStorage.setItem("user", JSON.stringify(user));
+        }, err => console.log(err));
+     };
   }
 }
