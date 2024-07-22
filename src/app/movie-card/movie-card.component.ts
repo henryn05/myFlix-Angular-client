@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService, director, genre } from '../fetch-api-data.service';
+import { UserService } from '../fetch-api-data.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageBoxComponent } from '../message-box/message-box.component';
 
 @Component({
   selector: 'app-movie-card',
@@ -9,12 +12,12 @@ import { UserService, director, genre } from '../fetch-api-data.service';
 
 export class MovieCardComponent implements OnInit {
   movies: any[] = [];
-  director: any[] = [];
-  genre: any[] = [];
-  details: any[] = [];
-  movieId: any[] = [];
 
-  constructor(public fetchApiData: UserService) { }
+  constructor(
+    public fetchApiData: UserService,
+    public router: Router,
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
     this.getMovies();
@@ -28,27 +31,33 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  getDirector(director: director): void {
-    this.fetchApiData.getDirector(director).subscribe((result: any) => {
-      this.director = result;
-      console.log(this.director);
-      return this.director;
+  showDirector(movie: any): void {
+    this.dialog.open(MessageBoxComponent, {
+      data: {
+        title: movie.director.name,
+        content: movie.director.bio
+      },
+      width: "300px"
     });
   }
 
-  getGenre(genre: genre): void {
-    this.fetchApiData.getGenre(genre).subscribe((result: any) => {
-      this.genre = result;
-      console.log(this.genre);
-      return this.genre;
+  showGenre(movie: any): void {
+    this.dialog.open(MessageBoxComponent, {
+      data: {
+        title: movie.genre.name,
+        content: movie.genre.description
+      },
+      width: "300px"
     });
   }
 
-  getDetails(details: any): void {
-    this.fetchApiData.getOneMovie(details).subscribe((result: any) => {
-      this.details = result;
-      console.log(this.details);
-      return this.details;
+  showDetails(movie: any): void {
+    this.dialog.open(MessageBoxComponent, {
+      data: {
+        title: movie.title,
+        content: movie.description
+      },
+      width: "300px"
     });
   }
 
