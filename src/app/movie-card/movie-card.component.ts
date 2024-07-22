@@ -34,28 +34,27 @@ export class MovieCardComponent implements OnInit {
   showDirector(movie: any): void {
     this.dialog.open(MessageBoxComponent, {
       data: {
-        title: movie.director.name,
-        content: movie.director.bio
+        title: movie.Director.Name,
+        content: movie.Director.Bio
       },
       width: "300px"
     });
   }
-
   showGenre(movie: any): void {
     this.dialog.open(MessageBoxComponent, {
       data: {
-        title: movie.genre.name,
-        content: movie.genre.description
+        title: movie.Genre.Name,
+        content: movie.Genre.Description
       },
       width: "300px"
-    });
+    })
   }
 
   showDetails(movie: any): void {
     this.dialog.open(MessageBoxComponent, {
       data: {
-        title: movie.title,
-        content: movie.description
+        title: movie.Title,
+        content: movie.Description
       },
       width: "300px"
     });
