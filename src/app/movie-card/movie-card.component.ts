@@ -34,6 +34,7 @@ export class MovieCardComponent implements OnInit {
       return this.movies;
     }, err => {
       console.log(err);
+      debugger;
     });
   }
 
