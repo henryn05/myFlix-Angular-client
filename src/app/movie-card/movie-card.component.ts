@@ -26,8 +26,14 @@ export class MovieCardComponent implements OnInit {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((res: any) => {
       this.movies = res;
-      console.log(this.movies);
+
+      let user = JSON.parse(localStorage.getItem("user") || "");
+      this.movies.forEach((movie: any) => {
+        movie.isFavorite = user.favoriteMovies.includes(movie._id);
+      });
       return this.movies;
+    }, err => {
+      console.log(err);
     });
   }
 
@@ -40,6 +46,7 @@ export class MovieCardComponent implements OnInit {
       width: "400px"
     });
   }
+
   showGenre(movie: any): void {
     this.dialog.open(MessageBoxComponent, {
       data: {
@@ -65,7 +72,7 @@ export class MovieCardComponent implements OnInit {
     let icon = document.getElementById(`${movie._id}-favorite-icon`);
 
     if (user.favoriteMovies.includes(movie._id)) {
-      this.fetchApiData.deleteFromFavoriteMovies(movie._id)
+      this.fetchApiData.deleteFromFavoriteMovies(user.id, movie.title)
         .subscribe(res => {
           icon?.setAttribute("fontIcon", "favorite_border");
 
@@ -76,7 +83,7 @@ export class MovieCardComponent implements OnInit {
           localStorage.setItem("user", JSON.stringify(user));
         });
     } else {
-      this.fetchApiData.addToFavoriteMovies(movie._id)
+      this.fetchApiData.addToFavoriteMovies(user.id, movie.title)
         .subscribe(res => {
           icon?.setAttribute("fontIcon", "favorite");
 
@@ -86,6 +93,6 @@ export class MovieCardComponent implements OnInit {
           user.favoriteMovies = res.favoriteMovies;
           localStorage.setItem("user", JSON.stringify(user));
         }, err => console.log(err));
-     };
+    };
   }
 }

@@ -12,10 +12,10 @@ import { Router } from "@angular/router";
 
 export class UserLoginFormComponent implements OnInit {
   @Input() userData = {
-    Username: "",
-    Password: "",
-    Email: "",
-    Birthday: ""
+    username: "",
+    password: "",
+    email: "",
+    birthday: ""
   };
 
   constructor(
@@ -30,15 +30,23 @@ export class UserLoginFormComponent implements OnInit {
 
   loginUser(): void {
     this.fetchApiData.userLogin(this.userData)
-      .subscribe((result) => {
+      .subscribe((res) => {
         // Logic for successful login
         this.dialogRef.close();
-        this.snackBar.open("User logged in successfully!", "OK", {
+        this.snackBar.open("Login success", "OK", {
           duration: 2000
         });
+        let user = {
+          ...res.user,
+          id: res.user._id,
+          password: this.userData.password,
+          token: res.token
+
+        }
+        localStorage.setItem("user", JSON.stringify(user));
         this.router.navigate(['movies']);
-      }, (result) => {
-        this.snackBar.open(result, "OK", {
+      }, (res) => {
+        this.snackBar.open(res, "OK", {
           duration: 2000
         });
       });

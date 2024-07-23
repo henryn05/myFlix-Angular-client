@@ -140,11 +140,11 @@ export class UserService{
   }
 
   // API call for "add to favorite movies" endpoint
-  addToFavoriteMovies(movie: any) : Observable<any> {
+  addToFavoriteMovies(userID: string, title: string) : Observable<any> {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const token = localStorage.getItem("token");
     return this.http
-      .post(apiUrl + "/users/" + user.Username + "/movies/" + movie._id, {
+      .post(apiUrl + "/users/" + userID + title, {
         headers: new HttpHeaders({
           Authorization: "Bearer " + token,
         }),
@@ -187,11 +187,11 @@ export class UserService{
     }
 
   // API call for "delete from favorite movies" endpoint
-  deleteFromFavoriteMovies(movie: any) : Observable<any> {
+  deleteFromFavoriteMovies(userID: string, title: string) : Observable<any> {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const token = localStorage.getItem("token");
     return this.http
-      .delete(apiUrl + "/users/" + user.Username + "/movies/" + movie._id, {
+      .delete(apiUrl + "/users/" + userID + title, {
         headers: new HttpHeaders({
           Authorization: "Bearer " + token,
         }),
