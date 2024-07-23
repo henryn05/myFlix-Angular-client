@@ -22,15 +22,14 @@ export class UserLoginFormComponent implements OnInit {
     public fetchApiData: UserService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
     public snackBar: MatSnackBar,
-    private router: Router
+    public router: Router
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   loginUser(): void {
     this.fetchApiData.userLogin(this.userData)
-      .subscribe((res) => {
+      .subscribe(res => {
         // Logic for successful login
         this.dialogRef.close();
         this.snackBar.open("Login success", "OK", {
@@ -38,15 +37,16 @@ export class UserLoginFormComponent implements OnInit {
         });
         let user = {
           ...res.user,
-          id: res.user._id,
+          id: res.user.id,
           password: this.userData.password,
           token: res.token
-
         }
+        debugger;
         localStorage.setItem("user", JSON.stringify(user));
-        this.router.navigate(['movies']);
-      }, (res) => {
-        this.snackBar.open(res, "OK", {
+        this.router.navigate(["movies"]);
+      }, res => {
+        // Logic for unsuccessful login
+        this.snackBar.open("Login fail", "OK", {
           duration: 2000
         });
       });
