@@ -23,6 +23,10 @@ export class MovieCardComponent implements OnInit {
     this.getMovies();
   }
 
+  /**
+   * Get every movie
+   * @returns {void}
+  */
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((res: any) => {
       this.movies = res;
@@ -38,6 +42,10 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Shows modal with director details
+   * @param {object} movie
+  */
   showDirector(movie: any): void {
     this.dialog.open(MessageBoxComponent, {
       data: {
@@ -48,6 +56,10 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Shows modal with genre details
+   * @param {object} movie
+  */
   showGenre(movie: any): void {
     this.dialog.open(MessageBoxComponent, {
       data: {
@@ -58,6 +70,10 @@ export class MovieCardComponent implements OnInit {
     })
   }
 
+  /**
+   * Shows modal with movie details
+   * @param {object} movie
+  */
   showDetails(movie: any): void {
     this.dialog.open(MessageBoxComponent, {
       data: {
@@ -68,6 +84,10 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Add or remove movie from user's favorite list
+   * @param {object} movie
+  */
   modifyFavoriteMovies(movie: any): void {
     let user = JSON.parse(localStorage.getItem("user") || "");
     let icon = document.getElementById(`${movie._id}-favorite-icon`);

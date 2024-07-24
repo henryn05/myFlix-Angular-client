@@ -21,9 +21,8 @@ export interface genre {
 
 
 export class UserService{
-  // Inject the HttpClient module to the constructor params
-  // This will provide HttpClient to the entire class,
-  // making it available via this.http
+  // Inject the HttpClient module to the constructor params;
+  // This will provide HttpClient to the entire class, making it available via this.http
   constructor(private http: HttpClient) {
 
   }
@@ -44,7 +43,11 @@ export class UserService{
     return throwError("Something bad happened; please try again later.");
   }
 
-  // API call for "user registration" endpoint
+  /**
+   * Create new user
+   * @param {object} userDetails must include username, password, email, and date of birth
+   * @returns
+  */
   public userRegistration(userDetails: any) : Observable<any> {
     console.log(userDetails);
     return this.http.post(apiUrl + "/users", userDetails).pipe(
@@ -52,14 +55,21 @@ export class UserService{
     );
   }
 
-  // API call for "user login" endpoint
+  /**
+   * Login user
+   * @param {object} userDetails must include username and password
+   * @returns
+   */
   public userLogin(userDetails: any) : Observable<any> {
     return this.http.post(apiUrl + "/login", userDetails).pipe(
       catchError(this.handleError)
     )
   }
 
-  // API call for "get all movies" endpoint
+  /**
+   * Gets all movies
+   * @returns
+   */
   getAllMovies() : Observable<any> {
     const token = (localStorage as any).getItem("token");
     return this.http
@@ -74,8 +84,12 @@ export class UserService{
       );
   }
 
-  // API call for "get one movie" endpoint
-  getOneMovie(title:string) : Observable<any> {
+  /**
+   * Get one specific movie
+   * @param {string} title title of the movie
+   * @returns
+   */
+  getOneMovie(title: string) : Observable<any> {
     const token = localStorage.getItem("token");
     return this.http
       .get(apiUrl + "/movies/" + title, {
@@ -89,7 +103,11 @@ export class UserService{
       );
   }
 
-  // API call for "get director" endpoint
+  /**
+   * Get one director for a specific movie
+   * @param {object} director must include name and bio
+   * @returns
+   */
   getDirector(director: director) : Observable<any> {
     const token = localStorage.getItem("token");
     return this.http
@@ -104,7 +122,11 @@ export class UserService{
       );
   }
 
-  // API call for "get genre" endpoint
+  /**
+   * Get one genre for a specific movie
+   * @param {object} genre must include name and description
+   * @returns
+   */
   getGenre(genre: genre) : Observable<any> {
     const token = localStorage.getItem("token");
     return this.http
@@ -119,17 +141,24 @@ export class UserService{
     );
   }
 
-  // API call for "get user" endpoint
+  /**
+   * Get one user
+   * @returns
+  */
   getUser() : Observable<any> {
     const user = JSON.parse(localStorage.getItem("user") || '{}');
     return user;
   }
 
-  // API call for "get favorite movies" endpoint
-  getFavoriteMovies(username: string) : Observable<any> {
+  /**
+   * Get user's favorite movies list
+   * @param {string} userID user's uniquely generated ID
+   * @returns
+   */
+  getFavoriteMovies(userID: string) : Observable<any> {
     const token = localStorage.getItem("token");
     return this.http
-      .get(apiUrl + "/users/" + username, {
+      .get(apiUrl + "/users/" + userID, {
         headers: new HttpHeaders({
           Authorization: "Bearer " + token
         })
@@ -139,7 +168,12 @@ export class UserService{
       );
   }
 
-  // API call for "add to favorite movies" endpoint
+  /**
+   * Add movie to user's favorite list
+   * @param {string} userID user's uniquely generated ID
+   * @param {string} title favorited movie's title
+   * @returns
+   */
   addToFavoriteMovies(userID: string, title: string) : Observable<any> {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const token = localStorage.getItem("token");
@@ -155,8 +189,12 @@ export class UserService{
       );
   }
 
-  // API call for "edit user info" endpoint
-  editUser(user: any, userDetails: any) : Observable<any> {
+  /**
+   * Edit user's details
+   * @param {object} userDetails must include username, password, email, and date of birth
+   * @returns
+   */
+  editUser(userDetails: any) : Observable<any> {
     const token = localStorage.getItem("token");
     return this.http
       .put(apiUrl + "/users/" + user.Username, userDetails, {
@@ -170,7 +208,10 @@ export class UserService{
       );
   }
 
-  // API call for "delete user" endpoint
+  /**
+   * Delete user permanently
+   * @returns
+   */
   deleteUser() : Observable<any> {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const token = localStorage.getItem("token");
@@ -186,7 +227,12 @@ export class UserService{
       );
     }
 
-  // API call for "delete from favorite movies" endpoint
+  /**
+   * Delete movie from user's favorited list
+   * @param {string} userID user's uniquely generated ID
+   * @param {string} title favorited movie's title
+   * @returns
+  */
   deleteFromFavoriteMovies(userID: string, title: string) : Observable<any> {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const token = localStorage.getItem("token");
