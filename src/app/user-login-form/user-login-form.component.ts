@@ -1,58 +1,49 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { UserService } from "../fetch-api-data.service";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatDialogRef } from "@angular/material/dialog";
-import { Router } from "@angular/router";
+import { Component, OnInit, Input } from '@angular/core';
+import { FetchApiDataService } from '../fetch-api-data.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { UserRegistrationFormComponent } from '../user-registration-form/user-registration-form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-login-form',
   templateUrl: './user-login-form.component.html',
-  styleUrl: './user-login-form.component.scss'
+  styleUrls: ['./user-login-form.component.scss']
 })
 
 export class UserLoginFormComponent implements OnInit {
-  @Input() userData = {
-    username: "",
-    password: "",
-    email: "",
-    birthday: ""
-  };
+  @Input() userData = { username: "", password: "" };
 
   constructor(
-    public fetchApiData: UserService,
-    public dialogRef: MatDialogRef<UserLoginFormComponent>,
+    public fetchApiData: FetchApiDataService,
+    public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
     public snackBar: MatSnackBar,
     public router: Router
-  ) { }
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
-  /** Login user
-   * @returns {void}
-   * @throws {error}
-  */
   loginUser(): void {
-    this.fetchApiData.userLogin(this.userData)
-      .subscribe(res => {
-        // Logic for successful login
+    this.fetchApiData.userLogin(this.userData).subscribe(
+      (res) => {
         this.dialogRef.close();
-        this.snackBar.open("Login success", "OK", {
+        this.snackBar.open(`Login success, Welcome ${res.user.username}`, 'OK', {
           duration: 2000
         });
         let user = {
           ...res.user,
-          id: res.user.id,
+          id: res.user._id,
           password: this.userData.password,
           token: res.token
-        }
-        debugger;
-        localStorage.setItem("user", JSON.stringify(user));
-        this.router.navigate(["movies"]);
-      }, res => {
-        // Logic for unsuccessful login
-        this.snackBar.open("Login fail", "OK", {
+        };
+        localStorage.setItem('user', JSON.stringify(user));
+        this.router.navigate(['movies']);
+      },
+      (err) => {
+        this.snackBar.open('Login fail', 'OK', {
           duration: 2000
         });
-      });
+      }
+    );
   }
 }
