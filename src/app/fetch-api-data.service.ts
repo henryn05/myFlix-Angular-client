@@ -24,9 +24,10 @@ export class FetchApiDataService {
     if (error.error instanceof ErrorEvent) {
       console.error("Some error occurred:", error.error.message);
     } else {
-      console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`
+      const errorBody = typeof error.error === 'object' ? JSON.stringify(error.error) : error.error;
+    	console.error(
+      `Error Status code ${error.status}, ` +
+      `Error body is: ${errorBody}`
       );
     }
     return throwError("Something bad happened; please try again later.");
@@ -49,7 +50,7 @@ export class FetchApiDataService {
    */
   public userLogin(userDetails: any): Observable<any> {
     return this.http.post(apiUrl + `/login?username=${userDetails.username}&password=${userDetails.password}`, userDetails)
-      .pipe(map(this.extractResponseData), catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
   /**
