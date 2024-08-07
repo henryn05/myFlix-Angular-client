@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 
 export class UserLoginFormComponent implements OnInit {
-  @Input() userData = { username: "", password: "" };
+  @Input() userData = { Username: "", Password: "" };
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -33,7 +33,7 @@ export class UserLoginFormComponent implements OnInit {
         let user = {
           ...res.user,
           id: res.user._id,
-          password: this.userData.password,
+          password: this.userData.Password,
           token: res.token
         };
         localStorage.setItem('user', JSON.stringify(user));
