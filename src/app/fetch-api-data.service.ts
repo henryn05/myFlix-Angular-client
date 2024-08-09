@@ -131,22 +131,6 @@ export class FetchApiDataService {
       map(this.extractResponseData), catchError(this.handleError)
     );
   }
-
-  /**
-   * Get user with ID
-   * @param {string} id
-   * @returns {Observable<any>}
-   */
-  public getUserByID(id: string): Observable<any> {
-    return this.http.get(apiUrl + `/user/${id}`, {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${this.getToken()}`,
-      })
-    }).pipe(
-      map(this.extractResponseData), catchError(this.handleError)
-    );
-  }
-
   /**
    * Add movie to user's favorite list
    * @param {string} userID

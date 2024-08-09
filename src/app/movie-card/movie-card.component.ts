@@ -91,7 +91,7 @@ export class MovieCardComponent implements OnInit {
     let user = JSON.parse(localStorage.getItem("user") || "");
     let icon = document.getElementById(`${movie._id}-favorite-icon`);
 
-    if (user.favoriteMovies.includes(movie._id)) {
+    if (user.Favorite_movies.includes(movie._id)) {
       this.fetchApiData.deleteFavoriteMovie(user.id, movie.title)
         .subscribe(res => {
           icon?.setAttribute("fontIcon", "favorite_border");
@@ -99,7 +99,7 @@ export class MovieCardComponent implements OnInit {
           console.log("delete success");
           console.log(res);
 
-          user.favoriteMovies = res.favoriteMovies;
+          user.Favorite_movies = res.Favorite_movies;
           localStorage.setItem("user", JSON.stringify(user));
         });
     } else {
@@ -110,7 +110,7 @@ export class MovieCardComponent implements OnInit {
           console.log("add success");
           console.log(res);
 
-          user.favoriteMovies = res.favoriteMovies;
+          user.Favorite_movies = res.Favorite_movies;
           localStorage.setItem("user", JSON.stringify(user));
         }, err => console.log(err));
     };
