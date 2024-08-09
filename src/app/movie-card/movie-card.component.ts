@@ -7,7 +7,7 @@ import { MessageBoxComponent } from '../message-box/message-box.component';
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
-  styleUrls: ['./movie-card.component.scss']
+  styleUrl: './movie-card.component.scss'
 })
 
 export class MovieCardComponent implements OnInit {
@@ -16,99 +16,103 @@ export class MovieCardComponent implements OnInit {
   constructor(
     public fetchApiData: FetchApiDataService,
     public router: Router,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
     this.getMovies();
   }
 
+  /**
+   * Get every movie
+   * @returns {void}
+  */
   getMovies(): void {
-    this.fetchApiData.getAllMovies().subscribe(
-      (res) => {
-        this.movies = res;
-        let user = JSON.parse(localStorage.getItem('user') || '');
-        this.movies.forEach((movie: any) => {
-          movie.isFavorite = user.favoriteMovies.includes(movie._id);
-        });
-        return this.movies;
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
-  }
-
-  logout(): void {
-    this.router.navigate(['welcome']);
-    localStorage.removeItem('user');
-  }
-
-  redirectProfile(): void {
-    this.router.navigate(['profile']);
-  }
-
-  modifyFavoriteMovies(movie: any): void {
-    let user = JSON.parse(localStorage.getItem('user') || '');
-    let icon = document.getElementById(`${movie._id}-favorite-icon`);
-
-    if (user.favoriteMovies.includes(movie._id)) {
-      this.fetchApiData.deleteFavoriteMovie(user.id, movie.title).subscribe(
-        (res) => {
-          icon?.setAttribute('fontIcon', 'favorite_border');
-          console.log('del success');
-          console.log(res);
-          user.favoriteMovies = res.favoriteMovies;
-          localStorage.setItem('user', JSON.stringify(user));
-        },
-        (err) => {
-          console.error(err);
-        }
-      );
-    } else {
-      this.fetchApiData.addFavoriteMovie(user.id, movie.title).subscribe(
-        (res) => {
-          icon?.setAttribute('fontIcon', 'favorite');
-          console.log('add success');
-          console.log(res);
-          user.favoriteMovies = res.favoriteMovies;
-          localStorage.setItem('user', JSON.stringify(user));
-        },
-        (err) => {
-          console.error(err);
-        }
-      );
-    }
-    localStorage.setItem('user', JSON.stringify(user));
-  }
-
-  showGenre(movie: any): void {
-    this.dialog.open(MessageBoxComponent, {
-      data: {
-        title: String(movie.genre.type).toUpperCase(),
-        content: movie.genre.description
-      },
-      width: '400px'
+    this.fetchApiData.getAllMovies().subscribe((res: any) => {
+      this.movies = res;
+      let user = JSON.parse(localStorage.getItem("user") || "");
+      this.movies.forEach((movie: any) => {
+        movie.isFavorite = user.favoriteMovies.includes(movie._id);
+      });
+      return this.movies;
+    }, err => {
+      console.log(err);
+      debugger;
     });
   }
 
+  /**
+   * Shows modal with director details
+   * @param {object} movie
+  */
   showDirector(movie: any): void {
     this.dialog.open(MessageBoxComponent, {
       data: {
-        title: movie.director.name,
-        content: movie.genre.description
+        title: movie.Director.Name,
+        content: movie.Director.Bio
       },
-      width: '400px'
+      width: "400px"
     });
   }
 
+  /**
+   * Shows modal with genre details
+   * @param {object} movie
+  */
+  showGenre(movie: any): void {
+    this.dialog.open(MessageBoxComponent, {
+      data: {
+        title: movie.Genre.Name,
+        content: movie.Genre.Description
+      },
+      width: "400px"
+    })
+  }
+
+  /**
+   * Shows modal with movie details
+   * @param {object} movie
+  */
   showDetails(movie: any): void {
     this.dialog.open(MessageBoxComponent, {
       data: {
-        title: movie.title,
-        content: movie.description
+        title: movie.Title,
+        content: movie.Description
       },
-      width: '400px'
+      width: "400px"
     });
+  }
+
+  /**
+   * Add or remove movie from user's favorite list
+   * @param {object} movie
+  */
+  modifyFavoriteMovies(movie: any): void {
+    let user = JSON.parse(localStorage.getItem("user") || "");
+    let icon = document.getElementById(`${movie._id}-favorite-icon`);
+
+    if (user.favoriteMovies.includes(movie._id)) {
+      this.fetchApiData.deleteFavoriteMovie(user.id, movie.title)
+        .subscribe(res => {
+          icon?.setAttribute("fontIcon", "favorite_border");
+
+          console.log("delete success");
+          console.log(res);
+
+          user.favoriteMovies = res.favoriteMovies;
+          localStorage.setItem("user", JSON.stringify(user));
+        });
+    } else {
+      this.fetchApiData.addFavoriteMovie(user.id, movie.title)
+        .subscribe(res => {
+          icon?.setAttribute("fontIcon", "favorite");
+
+          console.log("add success");
+          console.log(res);
+
+          user.favoriteMovies = res.favoriteMovies;
+          localStorage.setItem("user", JSON.stringify(user));
+        }, err => console.log(err));
+    };
   }
 }

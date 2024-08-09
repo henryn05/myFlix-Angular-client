@@ -54,14 +54,8 @@ export class FetchApiDataService {
    * @returns {Observable<any>}
    */
   public userLogin(userDetails: any): Observable<any> {
-    console.log(userDetails);
-    return this.http.get(apiUrl + `/login?username=${userDetails.Username}&password=${userDetails.Password}`, {
-      headers: new HttpHeaders({
-        "Authorization": `Bearer ${this.getToken()}`,
-        "Content-Type": "application/json"
-      })
-    }).pipe(
-      map(this.extractResponseData), catchError(this.handleError)
+    return this.http.post(apiUrl + "/login", userDetails)
+      .pipe(catchError(this.handleError)
     );
   }
 
