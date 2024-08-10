@@ -1,62 +1,52 @@
 <!DOCTYPE html>
-<button
-  mat-raised-button
-  (click)="logout()"
-  color="primary"
-  style="margin-right: 10px;"
->
-  Logout
-</button>
-<mat-card>
-  <mat-card-header>
+<mat-card class="profile-view">
   <mat-card-title color="primary">User Profile</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form>
-      <mat-form-field style="margin-right: 10px;">
-        <label>Username</label>
-        <input
-          matInput
-          [(ngModel)]="userData.Username"
-          placeholder="Username"
-          type="text"
-          name="Username"
-          required
-        >
-      </mat-form-field>
-      <mat-form-field style="margin-right: 10px;">
-        <label>Password</label>
-        <input
-          matInput
-          [(ngModel)]="userData.Password"
-          type = "password"
-          placeholder="Password"
-          name="Password"
-          required
-        >
-      </mat-form-field>
-      <mat-form-field style="margin-right: 10px;">
-        <label>Email</label>
-        <input
-          matInput
-          [(ngModel)]="userData.Email"
-          type = "email"
-          placeholder="Email"
-          name="Email"
-          required
-        >
-      </mat-form-field>
-      <mat-form-field style="margin-right: 10px;">
-        <label>Birthday</label>
-        <input
-          matInput
-          [(ngModel)]="userData.Birthday"
-          type = "date"
-          placeholder="Birthday"
-          name="Birthday"
-        >
-      </mat-form-field>
-    </form>
+    <mat-card-content>
+      <form>
+        <mat-form-field style="margin-right: 10px;">
+          <label>Username</label>
+          <input
+            matInput
+            [(ngModel)]="userData.Username"
+            placeholder="Username"
+            type="text"
+            name="Username"
+            required
+          >
+        </mat-form-field>
+        <mat-form-field style="margin-right: 10px;">
+          <label>Password</label>
+          <input
+            matInput
+            [(ngModel)]="userData.Password"
+            type = "password"
+            placeholder="Password"
+            name="Password"
+            required
+          >
+        </mat-form-field>
+        <mat-form-field style="margin-right: 10px;">
+          <label>Email</label>
+          <input
+            matInput
+            [(ngModel)]="userData.Email"
+            type = "email"
+            placeholder="Email"
+            name="Email"
+            required
+          >
+        </mat-form-field>
+        <mat-form-field style="margin-right: 10px;">
+          <label>Birthday</label>
+          <input
+            matInput
+            [(ngModel)]="userData.Birthday"
+            type = "date"
+            placeholder="Birthday"
+            name="Birthday"
+          >
+        </mat-form-field>
+      </form>
     </mat-card-content>
     <mat-card-actions>
       <button
@@ -75,16 +65,7 @@
       >
         Reset
       </button>
-      <button
-        mat-raised-button
-        (click)="backToMovie()"
-        color="primary"
-        style="margin-right: 10px;"
-      >
-        Back to Movies
-      </button>
     </mat-card-actions>
-
   <mat-card-title>Favorite Movies</mat-card-title>
   <div style="display: flex;">
     <mat-card *ngFor="let movie of this.favoriteMovies;" style="width: 280px; margin-right: 10px;">
@@ -104,5 +85,23 @@
         </button>
       </mat-card-actions>
     </mat-card>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        (click)="backToMovie()"
+        color="primary"
+        style="margin-right: 10px;"
+      >
+        Back to Movies
+      </button>
+      <button
+        mat-raised-button
+        (click)="logout()"
+        color="primary"
+        style="margin-right: 10px;"
+        >
+        Logout
+      </button>
+    </mat-card-actions>
   </div>
 </mat-card>
