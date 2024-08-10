@@ -1,0 +1,15 @@
+.welcome-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ transform: translateY(250%);
+  margin: 0;
+}
+.welcome-page h1 {
+  margin-bottom: 20px;
+  display: block;
+}
+.buttons {
+  display: block;
+}
