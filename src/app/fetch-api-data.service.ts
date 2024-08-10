@@ -60,6 +60,19 @@ export class FetchApiDataService {
   }
 
   /**
+   * get user with id
+   * @param {string} id
+   * @returns if token is false, status 401 & text "unauthorized". if user exists, status 200 & user object. if user doesn't exist, status 400
+   */
+  public getUserByID(id: string): Observable<any> {
+    return this.http.get(apiUrl + `/user/${id}`, {headers: new HttpHeaders(
+      { Authorization: `Bearer ${this.getToken()}` }
+    )}).pipe(
+      map(this.extractResponseData), catchError(this.handleError)
+    );
+  }
+
+  /**
    * Get all movies
    * @returns {Observable<any>}
    */
