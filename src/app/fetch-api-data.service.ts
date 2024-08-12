@@ -74,9 +74,11 @@ export class FetchApiDataService {
    * @returns if token is false, status 401 & text "unauthorized". if user exists, status 200 & user object. if user doesn't exist, status 400
    */
   public getUserByID(id: string): Observable<any> {
-    return this.http.get(apiUrl + `/user/${id}`, {headers: new HttpHeaders(
-      { Authorization: `Bearer ${this.getToken()}` }
-    )}).pipe(
+    return this.http.get(apiUrl + `/users/${id}`, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${this.getToken()}`
+      })
+    }).pipe(
       map(this.extractResponseData), catchError(this.handleError)
     );
   }
@@ -156,13 +158,15 @@ export class FetchApiDataService {
   /**
    * Add movie to user's favorite list
    * @param {string} username
-   * @param {string} title movie's title
+   * @param {string} movieID movie's title
    * @returns {Observable<any>}
    */
   public addFavoriteMovie(username: string, movieID: string): Observable<any> {
-    return this.http.post(apiUrl + `/user/${username}/movies/${movieID}`, {
+    const token = localStorage.getItem('token');
+    return this.http.post(apiUrl + `/users/${username}/movies/${movieID}`, {}, {
       headers: new HttpHeaders({
-        Authorization: `Bearer ${this.getToken()}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       })
     }).pipe(
       map(this.extractResponseData), catchError(this.handleError)
@@ -171,13 +175,14 @@ export class FetchApiDataService {
 
   /**
    * Delete a movie from user's favorite list
-   * @param {string} userID
-   * @param {string} title
+   * @param {string} username
+   * @param {string} movieID
    * @returns {Observable<any>}
    */
   public deleteFavoriteMovie(username: string, movieID: string): Observable<any> {
-    return this.http.delete(apiUrl + `/user/${username}/movies/${movieID}`, {
+    return this.http.delete(apiUrl + `/users/${username}/movies/${movieID}`, {
       headers: new HttpHeaders({
+        "Content-Type": "application/json",
         Authorization: `Bearer ${this.getToken()}`,
       })
     }).pipe(
@@ -191,7 +196,7 @@ export class FetchApiDataService {
    * @returns {Observable<any>}
    */
   public editUser(userDetails: any): Observable<any> {
-    return this.http.put(apiUrl + `/user/${userDetails.id}`, userDetails, {
+    return this.http.put(apiUrl + `/users/${userDetails.id}`, userDetails, {
       headers: new HttpHeaders({
         Authorization: `Bearer ${this.getToken()}`,
       })
@@ -206,7 +211,7 @@ export class FetchApiDataService {
    * @returns {Observable<any>}
    */
   public deleteUser(userID: string): Observable<any> {
-    return this.http.delete(apiUrl + `/user`, {
+    return this.http.delete(apiUrl + `/users`, {
       headers: new HttpHeaders({
         Authorization: `Bearer ${this.getToken()}`,
       }),
