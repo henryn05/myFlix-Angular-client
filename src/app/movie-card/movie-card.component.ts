@@ -88,7 +88,7 @@ export class MovieCardComponent implements OnInit {
    * @param {object} movie
   */
   modifyFavoriteMovies(movie: any): void {
-    let user = JSON.parse(localStorage.getItem("user") || "");
+    let user = JSON.parse(localStorage.getItem("user") || "{}");
     let icon = document.getElementById(`${movie._id}-favorite-icon`);
 
     if (user.favorite_movies.includes(movie._id)) {
@@ -118,5 +118,14 @@ export class MovieCardComponent implements OnInit {
       })
     }
     localStorage.setItem("user", JSON.stringify(user));
+  }
+
+  logout(): void {
+    this.router.navigate(["welcome"]);
+    localStorage.removeItem("user");
+  }
+
+  redirectProfile(): void {
+    this.router.navigate(["profile"]);
   }
 }
