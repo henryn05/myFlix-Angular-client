@@ -32,3 +32,10 @@ mat-card-title {
 img {
   width: 100%;
 }
+.navbar ul {
+  list-style-type: none;
+}
+.navbar ul button {
+  display: inline;
+  margin-right: 5%;
+}
