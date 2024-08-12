@@ -15,11 +15,20 @@ export class FetchApiDataService {
   // This will provide HttpClient to the entire class, making it available via this.http
   constructor(private http: HttpClient) {}
 
+  /**
+   * Retreive token from user
+   * @returns {string} token
+   */
   private getToken(): string {
     const user = localStorage.getItem("user");
     return user ? JSON.parse(user).token : "";
   }
 
+  /**
+   * Report name of error
+   * @param error from HttpErrorResponse
+   * @returns if error is present, error message
+   */
   private handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
       console.error("Some error occurred:", error.error.message);
@@ -146,12 +155,12 @@ export class FetchApiDataService {
   }
   /**
    * Add movie to user's favorite list
-   * @param {string} userID
+   * @param {string} username
    * @param {string} title movie's title
    * @returns {Observable<any>}
    */
-  public addFavoriteMovie(userID: string, title: string): Observable<any> {
-    return this.http.post(apiUrl + `/user/${userID}/${title}`, {}, {
+  public addFavoriteMovie(username: string, movieID: string): Observable<any> {
+    return this.http.post(apiUrl + `/user/${username}/movies/${movieID}`, {
       headers: new HttpHeaders({
         Authorization: `Bearer ${this.getToken()}`,
       })
@@ -166,8 +175,8 @@ export class FetchApiDataService {
    * @param {string} title
    * @returns {Observable<any>}
    */
-  public deleteFavoriteMovie(userID: string, title: string): Observable<any> {
-    return this.http.delete(apiUrl + `/user/${userID}/${title}`, {
+  public deleteFavoriteMovie(username: string, movieID: string): Observable<any> {
+    return this.http.delete(apiUrl + `/user/${username}/movies/${movieID}`, {
       headers: new HttpHeaders({
         Authorization: `Bearer ${this.getToken()}`,
       })
@@ -207,7 +216,11 @@ export class FetchApiDataService {
     );
   }
 
-  // Non-typed response extraction
+  /**
+   *Retrieve specific data from the response body
+   * @param {any} res response body
+   * @returns response body or empty array
+   */
   private extractResponseData(res: any): any {
     const body = res;
     return body || {};

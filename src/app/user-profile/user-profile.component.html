@@ -68,12 +68,12 @@
     </mat-card-actions>
   <mat-card-title>Favorite Movies</mat-card-title>
   <div style="display: flex;">
-    <mat-card *ngFor="let movie of this.favoriteMovies;" style="width: 280px; margin-right: 10px;">
+    <mat-card *ngFor="let movie of this.Favorite_movies;" style="width: 280px; margin-right: 10px;">
       <mat-card-header>
         <mat-card-title>{{movie.title}}</mat-card-title>
         <mat-card-subtitle>Directed by: {{movie.director.name}}</mat-card-subtitle>
       </mat-card-header>
-      <img src="{{movie.Image}}" alt="{{movie.title}}" />
+      <img src="{{movie.Image}}" alt="{{movie.Title}}" />
       <mat-card-actions>
         <button
           mat-raised-button

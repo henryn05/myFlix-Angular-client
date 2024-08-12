@@ -3,10 +3,10 @@
   <nav class="navbar">
     <ul>
       <button mat-raised-button color="primary">
-        <a routerLink="/welcome">Logout</a>
+        <a (click)="logout()">Logout</a>
       </button>
       <button mat-raised-button color="primary">
-        <a routerLink="/user">Profile</a>
+        <a (click)="redirectProfile()">Profile</a>
       </button>
     </ul>
   </nav>

@@ -32,7 +32,7 @@ export class MovieCardComponent implements OnInit {
       this.movies = res;
       let user = JSON.parse(localStorage.getItem("user") || "");
       this.movies.forEach((movie: any) => {
-        movie.isFavorite = user.favorite_movies.includes(movie._id);
+        movie.isFavorite = user.Favorite_movies.includes(movie._id);
       });
       return this.movies;
     }, err => {
@@ -91,27 +91,24 @@ export class MovieCardComponent implements OnInit {
     let user = JSON.parse(localStorage.getItem("user") || "{}");
     let icon = document.getElementById(`${movie._id}-favorite-icon`);
 
-    if (user.favorite_movies.includes(movie._id)) {
-      this.fetchApiData.deleteFavoriteMovie(user._id, movie.title).subscribe(res => {
+    if (user.Favorite_movies.includes( movie._id)) {
+      this.fetchApiData.deleteFavoriteMovie(user.Username, movie._id).subscribe(res => {
         icon?.setAttribute("fontIcon", "favorite_border");
 
         console.log("del success")
         console.log(res);
-        user.favorite_movies = res.favorite_movies;
+        user.Favorite_movies = res.Favorite_movies;
         localStorage.setItem("user", JSON.stringify(user));
       }, err => {
         console.error(err)
       })
     } else {
-      // icon?.setAttribute("fontIcon", "favorite");
-      // user.favorite_movies.push(movie._id);
-      // addFavoriteMovie return unauth, debugging
-      this.fetchApiData.addFavoriteMovie(user._id, movie.title).subscribe(res => {
+      this.fetchApiData.addFavoriteMovie(user.Username, movie._id).subscribe(res => {
         icon?.setAttribute("fontIcon", "favorite");
 
         console.log("add success")
         console.log(res);
-        user.favorite_movies = res.favorite_movies;
+        user.Favorite_movies = res.Favorite_movies;
         localStorage.setItem("user", JSON.stringify(user));
       }, err => {
         console.error(err)
@@ -126,6 +123,6 @@ export class MovieCardComponent implements OnInit {
   }
 
   redirectProfile(): void {
-    this.router.navigate(["profile"]);
+    this.router.navigate(["user"]);
   }
 }
