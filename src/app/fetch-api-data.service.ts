@@ -70,11 +70,11 @@ export class FetchApiDataService {
 
   /**
    * get user with id
-   * @param {string} id
+   * @param {string} username
    * @returns if token is false, status 401 & text "unauthorized". if user exists, status 200 & user object. if user doesn't exist, status 400
    */
-  public getUserByID(id: string): Observable<any> {
-    return this.http.get(apiUrl + `/users/${id}`, {
+  public getSpecificUser (username: string): Observable<any> {
+    return this.http.get(apiUrl + `/users/${username}`, {
       headers: new HttpHeaders({
         Authorization: `Bearer ${this.getToken()}`
       })
@@ -146,7 +146,7 @@ export class FetchApiDataService {
    * Get all users
    * @returns {Observable<any>}
    */
-  public getUserList(): Observable<any> {
+  public getAllUsers(): Observable<any> {
     return this.http.get(apiUrl + `/users`, {
       headers: new HttpHeaders({
         Authorization: `Bearer ${this.getToken()}`,
@@ -176,11 +176,11 @@ export class FetchApiDataService {
   /**
    * Delete a movie from user's favorite list
    * @param {string} username
-   * @param {string} movieID
+   * @param {string} movieTitle
    * @returns {Observable<any>}
    */
-  public deleteFavoriteMovie(username: string, movieID: string): Observable<any> {
-    return this.http.delete(apiUrl + `/users/${username}/movies/${movieID}`, {
+  public deleteFavoriteMovie(username: string, movieTitle: string): Observable<any> {
+    return this.http.delete(apiUrl + `/users/${username}/movies/${movieTitle}`, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.getToken()}`,

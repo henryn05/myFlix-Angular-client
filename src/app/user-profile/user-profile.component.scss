@@ -2,6 +2,14 @@
   margin: 10%;
   padding: 5%;
 }
+.favorite-movies {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5%;
+}
+.user-actions {
+  margin-top: 7.5%;
+}
 mat-card-title {
-  margin: 2.5%;
+  margin-bottom: 2.5%;
 }

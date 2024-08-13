@@ -48,43 +48,47 @@
         </mat-form-field>
       </form>
     </mat-card-content>
-    <mat-card-actions>
-      <button
-        mat-raised-button
-        (click)="updateUser()"
-        color="primary"
-        style="margin-right: 10px;"
-      >
-        Update
-      </button>
-      <button
-        mat-raised-button
-        (click)="resetUser()"
-        color="primary"
-        style="margin-right: 10px;"
-      >
-        Reset
-      </button>
-    </mat-card-actions>
-  <mat-card-title>Favorite Movies</mat-card-title>
-  <div style="display: flex;">
-    <mat-card *ngFor="let movie of this.Favorite_movies;" style="width: 280px; margin-right: 10px;">
-      <mat-card-header>
-        <mat-card-title>{{movie.title}}</mat-card-title>
-        <mat-card-subtitle>Directed by: {{movie.director.name}}</mat-card-subtitle>
-      </mat-card-header>
-      <img src="{{movie.Image}}" alt="{{movie.Title}}" />
+    <div class="profile-actions">
       <mat-card-actions>
         <button
           mat-raised-button
-          (click)="removeFromFavorite(movie)"
+          (click)="updateUser()"
           color="primary"
           style="margin-right: 10px;"
         >
-          Remove from favorite
+          Update
+        </button>
+        <button
+          mat-raised-button
+          (click)="resetUser()"
+          color="primary"
+          style="margin-right: 10px;"
+        >
+          Reset
+        </button>
+      </mat-card-actions>
+    </div>
+  <mat-card-title>Favorite Movies</mat-card-title>
+  <div class="favorite-movies">
+    <mat-card *ngFor="let movie of Favorite_movies, let i=index;" style="width: 280px; margin-right: 10px;">
+      <mat-card-header>
+        <mat-card-title>{{movie.Title}}</mat-card-title>
+        <mat-card-subtitle>Directed by: {{movie.Director.Name}}</mat-card-subtitle>
+      </mat-card-header>
+      <img src="{{movie.Image}}" alt="{{movie.Title}}" />
+      <mat-card-actions class="movie-actions">
+        <button
+          mat-raised-button
+          (click)="removeFromFavorite(movie.Title)"
+          color="primary"
+          style="margin-right: 10px;"
+        >
+          Remove from Favorite Movies
         </button>
       </mat-card-actions>
     </mat-card>
+  </div>
+  <div class="user-actions">
     <mat-card-actions>
       <button
         mat-raised-button

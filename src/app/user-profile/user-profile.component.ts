@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FetchApiDataService } from '../fetch-api-data.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { FetchApiDataService } from "../fetch-api-data.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.scss'
+  selector: "app-user-profile",
+  templateUrl: "./user-profile.component.html",
+  styleUrl: "./user-profile.component.scss"
 })
 export class UserProfileComponent implements OnInit {
   userData: any = {};
@@ -47,29 +47,27 @@ export class UserProfileComponent implements OnInit {
   getfavoriteMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((res: any) => {
       this.Favorite_movies = res.filter((movie: any) => {
-        return this.userData.Favorite_movies.includes(movie._id)
-      })
+        return this.userData.Favorite_movies.includes(movie._id);
+      });
+      if (this.Favorite_movies.length === 0) {
+        this.Favorite_movies = ["You currently have no favorite movies"];
+      }
     }, (err: any) => {
       console.error(err);
     });
   }
 
   getUser(): void {
-    this.fetchApiData.getUserByID(this.userData.id).subscribe((res: any) => {
-      this.userData = {
-        ...res,
-        id: res._id,
-        password: this.userData.password,
-        token: this.userData.token
-      };
-      localStorage.setItem("user", JSON.stringify(this.userData));
-      this.getfavoriteMovies();
-    })
+    this.fetchApiData.getSpecificUser(this.userData.Username)
+      .subscribe((res: any) => {
+        return this.getfavoriteMovies();
+      }
+    )
   }
 
   removeFromFavorite(movie: any): void {
-    this.fetchApiData.deleteFavoriteMovie(this.userData.id, movie.title).subscribe((res: any) => {
-      this.userData.favoriteMovies = res.favoriteMovies;
+    this.fetchApiData.deleteFavoriteMovie(this.userData.Username, movie.Title).subscribe((res: any) => {
+      this.userData.Favorite_movies = res.Favorite_movies;
       this.getfavoriteMovies();
     }, (err: any) => {
       console.error(err)
