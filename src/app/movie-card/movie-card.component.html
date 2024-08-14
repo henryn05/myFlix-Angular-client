@@ -48,7 +48,7 @@
             </button>
             <button mat-button>
               <mat-icon
-                fontIcon="{{movie.isFavorite ? 'favorite' : ' favorite_border'}}"
+                fontIcon="{{isFavorite(movie) ? 'favorite' : ' favorite_border'}}"
                 id="{{movie._id}}-favorite-i"
                 color="primary"
                 (click)="modifyFavoriteMovies(movie)"

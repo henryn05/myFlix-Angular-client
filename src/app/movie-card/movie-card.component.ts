@@ -37,7 +37,6 @@ export class MovieCardComponent implements OnInit {
       return this.movies;
     }, err => {
       console.log(err);
-      debugger;
     });
   }
 
@@ -115,6 +114,11 @@ export class MovieCardComponent implements OnInit {
       })
     }
     localStorage.setItem("user", JSON.stringify(user));
+  }
+
+  isFavorite(movie: any): boolean {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    return user.Favorite_movies.includes(movie._id);
   }
 
   logout(): void {
