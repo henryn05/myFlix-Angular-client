@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,6 +12,7 @@ import { MessageBoxComponent } from '../message-box/message-box.component';
 
 export class MovieCardComponent implements OnInit {
   movies: any[] = [];
+  @Input() searchQuery: string = "";
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -40,6 +41,14 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  getFilteredMovies(): any[] {
+    if (!this.searchQuery.trim()) {
+      return this.movies;
+    }
+
+    return this.movies.filter(movie => movie.Title.toLowerCase()
+      .includes(this.searchQuery.toLowerCase()));
+  }
   /**
    * Shows modal with director details
    * @param {object} movie

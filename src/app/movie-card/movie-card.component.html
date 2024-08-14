@@ -8,11 +8,16 @@
       <button mat-raised-button color="primary">
         <a (click)="redirectProfile()">Profile</a>
       </button>
+        <input
+          class="search-bar"
+          [(ngModel)]="searchQuery"
+          placeholder="Search"
+        />
     </ul>
   </nav>
   <div class="movie-cards">
     <mat-card class="movie-card"
-      *ngFor="let movie of movies; let i=index;"
+      *ngFor="let movie of getFilteredMovies(); let i=index;"
     >
       <mat-dialog-content>
         <mat-card-header>
