@@ -50,9 +50,6 @@ export class UserProfileComponent implements OnInit {
       this.Favorite_movies = res.filter((movie: any) => {
         return this.userData.Favorite_movies.includes(movie._id);
       });
-      if (this.Favorite_movies.length === 0) {
-        this.Favorite_movies = ["You currently have no favorite movies"];
-      }
     }, (err: any) => {
       console.error(err);
     });
