@@ -91,7 +91,7 @@ export class MovieCardComponent implements OnInit {
     let user = JSON.parse(localStorage.getItem("user") || "{}");
     let icon = document.getElementById(`${movie._id}-favorite-icon`);
 
-    if (user.Favorite_movies.includes( movie._id)) {
+    if (user.Favorite_movies.includes(movie._id)) {
       this.fetchApiData.deleteFavoriteMovie(user.Username, movie._id).subscribe(res => {
         icon?.setAttribute("fontIcon", "favorite_border");
 

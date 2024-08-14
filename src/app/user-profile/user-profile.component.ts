@@ -15,6 +15,7 @@ export class UserProfileComponent implements OnInit {
     public router: Router
   ) {
     this.userData = JSON.parse(localStorage.getItem("user") || "");
+
   }
 
   ngOnInit(): void {
@@ -65,10 +66,13 @@ export class UserProfileComponent implements OnInit {
     )
   }
 
-  removeFromFavorite(movie: any): void {
-    this.fetchApiData.deleteFavoriteMovie(this.userData.Username, movie.Title).subscribe((res: any) => {
+  removeFromFavorite(movieID : string): void {
+     let user = JSON.parse(localStorage.getItem("user") || "{}");
+    this.fetchApiData.deleteFavoriteMovie(user.Username, movieID).subscribe((res: any) => {
       this.userData.Favorite_movies = res.Favorite_movies;
-      this.getfavoriteMovies();
+      console.log("del success")
+      console.log(res);
+      localStorage.setItem("user", JSON.stringify(user));
     }, (err: any) => {
       console.error(err)
     })

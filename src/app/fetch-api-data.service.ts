@@ -99,11 +99,11 @@ export class FetchApiDataService {
 
   /**
    * Get movie with specific ID
-   * @param {string} id
+   * @param {string} title
    * @returns {Observable<any>}
    */
-  public getMovieWithID(id: string): Observable<any> {
-    return this.http.get(apiUrl + `/movieid/${id}`, {
+  public getMovieByTitle(title: string): Observable<any> {
+    return this.http.get(apiUrl + `/movieid/${title}`, {
       headers: new HttpHeaders({
         Authorization: `Bearer ${this.getToken()}`,
       })
@@ -176,11 +176,11 @@ export class FetchApiDataService {
   /**
    * Delete a movie from user's favorite list
    * @param {string} username
-   * @param {string} movieTitle
+   * @param {string} movieID
    * @returns {Observable<any>}
    */
-  public deleteFavoriteMovie(username: string, movieTitle: string): Observable<any> {
-    return this.http.delete(apiUrl + `/users/${username}/movies/${movieTitle}`, {
+  public deleteFavoriteMovie(username: string, movieID: string): Observable<any> {
+    return this.http.delete(apiUrl + `/users/${username}/movies/${movieID}`, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.getToken()}`,
