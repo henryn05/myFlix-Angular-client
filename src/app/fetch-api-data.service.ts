@@ -4,7 +4,7 @@ import { Observable, throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 
 // Declaring the api url that will provide data for the client app
-const apiUrl = "https://myflix-api-hn05.onrender.com";
+const apiUrl = "http://54.224.129.227/";
 
 @Injectable({
   providedIn: 'root'
